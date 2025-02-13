@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "cputest.h"
+#include "ramtest.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,12 +17,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void updateCpuResult(QString result);
+    void on_startButton_clicked();
+    void cpuResult(QString finalResult);
+    void ramResult(QString result);
+
 
 
 private:
     Ui::MainWindow *ui;
     CPUTest *cpuTest;
+    RAMTest *ramTest;
 };
 
 #endif // MAINWINDOW_H

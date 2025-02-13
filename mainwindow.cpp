@@ -4,13 +4,15 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , cpuTest(new CPUTest(this)) // CPU Test nesnesini oluştur
+    , cpuTest(new CPUTest(this)) // CPU test nesnesini oluşturur
+    , ramTest(new RAMTest(this)) // Ram test nesnesini oluşturur
+
 {
     ui->setupUi(this);
 
-    // Sinyal-Slot bağlantıları
-    connect(cpuTest, &CPUTest::updateResult, this, &MainWindow::updateCpuResult);
-
+    // sinyal slot bağlantıları sağlanır
+    connect(cpuTest, &CPUTest::cpuResult, this, &MainWindow::cpuResult);
+    connect(ramTest, &RAMTest::ramResult, this, &MainWindow::ramResult);
 }
 
 MainWindow::~MainWindow()
@@ -18,17 +20,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-// CPU sonuçlarını anlık olarak günceller
-void MainWindow::updateCpuResult(QString result)
+// Kullanıcı başlat butonuna tıkladığında çağrılır
+void MainWindow::on_startButton_clicked()
 {
-    bool ok;
-    int duration = ui->timeInput->text().toInt(&ok);
-    if (ok && duration > 0) {
-        ui->resultLabel->setText("Test başlatılıyor...");
-        cpuTest->runTest(duration);
-    } else {
-        ui->resultLabel->setText("Lütfen geçerli bir süre girin.");
-    }
+
+        ui->startButton->setText("Test başladı");
+        ramTest->runTest(100);
+        cpuTest->runTest(5);
+
 }
+
+// CPU testi tamamlandığında çağrılır
+void MainWindow::cpuResult(QString finalResult)
+{
+    ui->cpuResult->setText(finalResult);
+}
+// Ram testi tamamlandığında çağrılır
+void MainWindow::ramResult(QString finalResult)
+{
+    ui->ramResult->setText(finalResult);
+}
+
 

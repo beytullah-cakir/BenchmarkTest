@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QThread>
 #include <QString>
-#include <chrono>
 #include <cmath>
 
 class CPUTest : public QThread {
@@ -14,9 +13,11 @@ public:
     void runTest(int durationSeconds);
 
 signals:
-    void updateResult(QString result);
+    //void updateResult(QString result);
+    void cpuResult(QString finalResult);
 
-
+protected:
+    void run() override; // QThread'den türeyen sınıf
 
 private:
     int testDuration;

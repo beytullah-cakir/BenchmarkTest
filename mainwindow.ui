@@ -14,44 +14,68 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="timeInput">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>120</y>
-      <width>113</width>
-      <height>28</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>190</y>
-      <width>83</width>
+      <x>300</x>
+      <y>150</y>
+      <width>151</width>
       <height>29</height>
      </rect>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Start</string>
+    </property>
+    <property name="autoRepeat">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>true</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="resultLabel">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>280</y>
-      <width>191</width>
-      <height>81</height>
+      <x>210</x>
+      <y>230</y>
+      <width>341</width>
+      <height>211</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="cpuResult">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="ramResult">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
