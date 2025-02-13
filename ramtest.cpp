@@ -1,38 +1,43 @@
 #include "ramtest.h"
 
+/*
+Ramdan 100 MB lik yer ayırıyoruz
+bu yere veri yazıp sonrasında okuyoruz
+yazma ve okuma hızlarının ortalamasını alarak genel ram hızını belirliyoruz
+*/
+
 RAMTest::RAMTest(QObject *parent) : QThread(parent) {}
 
-void RAMTest::runTest(size_t sizeMB) {
-    dataSizeMB = sizeMB;
-    start(); // QThread'in run() fonksiyonunu başlatır
+void RAMTest::runTest() {
+    start();
 }
 
 void RAMTest::run() {
-    size_t dataSize = dataSizeMB * 1024 * 1024; // MB -> Bayt çevirme
+    size_t dataSize = 100 * 1024 * 1024; // MB -> Bayt çevirme
     std::vector<char> buffer(dataSize, 0); // RAM'de alan ayır
 
-    // yazma hızı
+    // Yazma hızını hesaplar
     auto startTime = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < dataSize; i++) {
         buffer[i] = static_cast<char>(i % 256); // Rastgele veri yaz
     }
     auto endTime = std::chrono::high_resolution_clock::now();
     double writeTime = std::chrono::duration<double>(endTime - startTime).count();
-    double writeSpeedMT = (dataSize / writeTime) / 1'000'000.0; // Yazma hızı (MT/s)
+    double writeSpeedMT = (dataSize / writeTime) / 1'000'000.0;
 
 
 
-    // okuma hızı
+    // Okuma hızını hesaplar
     volatile char temp;
     startTime = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < dataSize; i++) {
-        temp = buffer[i]; // Veriyi RAM'den oku
+        temp = buffer[i]; // Veriyi RAM den okur
     }
     endTime = std::chrono::high_resolution_clock::now();
     double readTime = std::chrono::duration<double>(endTime - startTime).count();
     double readSpeedMT = (dataSize / readTime) / 1'000'000.0; // Okuma hızı (MT/s)
 
-    // ortalamayız hesaplar
+    // Ortalama hızı hesaplar
     double avgSpeedMT = (writeSpeedMT + readSpeedMT) / 2.0;
 
 

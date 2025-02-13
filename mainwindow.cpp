@@ -24,9 +24,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_startButton_clicked()
 {
 
-        ui->startButton->setText("Test başladı");
-        ramTest->runTest(100);
-        cpuTest->runTest(5);
+
+        ramTest->runTest();
+        cpuTest->runTest();
 
 }
 

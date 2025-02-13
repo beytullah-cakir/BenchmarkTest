@@ -11,7 +11,7 @@ class RAMTest : public QThread {
 
 public:
     explicit RAMTest(QObject *parent = nullptr);
-    void runTest(size_t dataSizeMB); // RAM testini başlat
+    void runTest(); // RAM testini başlat
 
 signals:
     void ramResult(const QString &finalResult); // Test tamamlandığında sinyal
@@ -19,8 +19,6 @@ signals:
 protected:
     void run() override; // QThread'in çalıştıracağı fonksiyon
 
-private:
-    size_t dataSizeMB; // Test edilecek veri miktarı (MB)
 };
 
 #endif // RAMTEST_H

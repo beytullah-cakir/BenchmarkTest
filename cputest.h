@@ -5,12 +5,15 @@
 #include <QThread>
 #include <QString>
 #include <cmath>
+#include <cmath>
+#include <QProcess>
+#include <qprocess.h>
 
 class CPUTest : public QThread {
     Q_OBJECT
 public:
     explicit CPUTest(QObject *parent = nullptr);
-    void runTest(int durationSeconds);
+    void runTest();
 
 signals:
     //void updateResult(QString result);
@@ -19,8 +22,8 @@ signals:
 protected:
     void run() override; // QThread'den türeyen sınıf
 
-private:
-    int testDuration;
+
+
 };
 
 #endif // CPUTEST_H
