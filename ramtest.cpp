@@ -1,6 +1,6 @@
 #include "ramtest.h"
 
-RAMTest::RAMTest(QObject *parent) : QThread(parent){}
+RAMTest::RAMTest(QObject *parent) : QThread(parent) {}
 
 void RAMTest::runTest(size_t sizeMB) {
     dataSizeMB = sizeMB;
@@ -8,32 +8,35 @@ void RAMTest::runTest(size_t sizeMB) {
 }
 
 void RAMTest::run() {
-    size_t dataSize = dataSizeMB * 1024 * 1024; // MB'dan bayta çevir
-    std::vector<char> buffer(dataSize, 0); // RAM'de büyük bir alan ayır
+    size_t dataSize = dataSizeMB * 1024 * 1024; // MB -> Bayt çevirme
+    std::vector<char> buffer(dataSize, 0); // RAM'de alan ayır
 
-
-
-    // **Yazma Hızı Testi**
+    // yazma hızı
     auto startTime = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < dataSize; i++) {
         buffer[i] = static_cast<char>(i % 256); // Rastgele veri yaz
     }
     auto endTime = std::chrono::high_resolution_clock::now();
     double writeTime = std::chrono::duration<double>(endTime - startTime).count();
-    double writeSpeed = (dataSizeMB / writeTime); // MB/s cinsinden hız
+    double writeSpeedMT = (dataSize / writeTime) / 1'000'000.0; // Yazma hızı (MT/s)
 
 
 
-    // **Okuma Hızı Testi**
+    // okuma hızı
     volatile char temp;
     startTime = std::chrono::high_resolution_clock::now();
     for (size_t i = 0; i < dataSize; i++) {
-        temp = buffer[i]; // RAM'den okuma işlemi yap
+        temp = buffer[i]; // Veriyi RAM'den oku
     }
     endTime = std::chrono::high_resolution_clock::now();
     double readTime = std::chrono::duration<double>(endTime - startTime).count();
-    double readSpeed = (dataSizeMB / readTime); // MB/s cinsinden hız
+    double readSpeedMT = (dataSize / readTime) / 1'000'000.0; // Okuma hızı (MT/s)
 
-    //emit updateResult(QString("RAM Okuma Hızı: %1 MB/s").arg(readSpeed));
-    emit ramResult(QString("RAM Okuma Hızı: %1 MB/s").arg(readSpeed));
+    // ortalamayız hesaplar
+    double avgSpeedMT = (writeSpeedMT + readSpeedMT) / 2.0;
+
+
+
+    emit ramResult(QString("RAM Hızı: %1 MT/s").arg(avgSpeedMT, 0, 'f', 3));
 }
+
