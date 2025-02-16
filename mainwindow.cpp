@@ -25,8 +25,8 @@ void MainWindow::on_startButton_clicked()
 {
 
 
-        ramTest->runTest();
-        cpuTest->runTest();
+    ramTest->runTest();
+    cpuTest->startTests();
 
 }
 
