@@ -27,8 +27,6 @@ private:
     double floatingPointTest();
     double memoryTest();
     double threadTest();
-    template<typename Func>
-    double measureTime(Func&& func);
 };
 
 #endif // CPUTEST_H
